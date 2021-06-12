@@ -156,10 +156,16 @@ pub struct SpeedMeasurement {
 
 impl SpeedMeasurement {
     pub fn kbps(&self) -> u32 {
+        if self.duration.as_millis() == 0 {
+            return 0;
+        }
         (self.size as u32 * 8) / self.duration.as_millis() as u32
     }
 
     pub fn bps_f64(&self) -> f64 {
+        if self.duration.as_millis() == 0 {
+            return 0.;
+        }
         (self.size as f64 * 8.0) / (self.duration.as_millis() as f64 / (1000.0))
     }
 }
